@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-playfair: 'Playfair Display', serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--font-jetbrains), monospace;
+  background-image:
+    radial-gradient(ellipse 100% 50% at 50% 0%, rgba(127, 29, 29, 0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 90% 100%, rgba(120, 53, 15, 0.08) 0%, transparent 55%);
+}
+
+.font-serif {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains), 'Courier New', monospace;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes wordReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmerText {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.word-reveal {
+  opacity: 0;
+  animation: wordReveal 0.4s ease-out forwards;
+}

@@ -3,6 +3,7 @@ import HeroSection from '@/components/HeroSection';
 import MetricsGrid from '@/components/MetricsGrid';
 import WordCloud from '@/components/WordCloud';
 import DisclaimerSection from '@/components/DisclaimerSection';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +25,7 @@ export default async function Home() {
         <HeroSection />
 
         {/* Word Cloud Section */}
-        <section className="animate-fade-in-up mb-16" style={{ animationDelay: '0.15s' }}>
+        <ScrollReveal className="mb-16">
           <div className="flex items-center gap-4 mb-4">
             <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500 font-mono">
               The Vocabulary of Rejection
@@ -42,12 +43,12 @@ export default async function Home() {
               <WordCloud words={words} />
             </div>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* Metrics Section */}
-        <section className="mb-16">
+        <div className="mb-16">
           <MetricsGrid metrics={metrics} />
-        </section>
+        </div>
 
         <DisclaimerSection />
       </main>

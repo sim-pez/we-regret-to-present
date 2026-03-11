@@ -75,3 +75,16 @@ export function computeGhostingRate(ghosted: number, total: number): string {
   if (total === 0) return '0%';
   return `${Math.round((ghosted / total) * 100)}%`;
 }
+
+export function formatDuration(days: number): string {
+  const totalMinutes = Math.round(days * 24 * 60);
+  if (totalMinutes < 1) return '< 1m';
+  const d = Math.floor(totalMinutes / (24 * 60));
+  const h = Math.floor((totalMinutes % (24 * 60)) / 60);
+  const m = totalMinutes % 60;
+  const parts: string[] = [];
+  if (d > 0) parts.push(`${d}d`);
+  if (h > 0) parts.push(`${h}h`);
+  if (m > 0 || d > 0 || h > 0) parts.push(`${m}m`);
+  return parts.join(' ') || '< 1m';
+}

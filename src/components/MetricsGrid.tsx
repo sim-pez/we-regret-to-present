@@ -1,6 +1,8 @@
 import StatCard from './StatCard';
 import FastestRejectionBadge from './FastestRejectionBadge';
+import ScrollReveal from './ScrollReveal';
 import type { ApplicationMetrics } from '@/lib/queries';
+import { formatDuration } from '@/lib/metrics';
 
 interface MetricsGridProps {
   metrics: ApplicationMetrics;
@@ -34,109 +36,119 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
   return (
     <div className="space-y-10">
       {/* Row 1 — Headlines */}
-      <div className="animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
-        <SectionHeader>The Headline Numbers</SectionHeader>
+      <div>
+        <ScrollReveal><SectionHeader>The Headline Numbers</SectionHeader></ScrollReveal>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          <StatCard
-            label="Rejection Rate"
-            value={metrics.rejectionRate}
-            subtext="of all applications"
-            variant="highlight"
-            animationDelay="0.3s"
-          />
-          <StatCard
-            label="Ghosting Rate"
-            value={metrics.ghostingRate}
-            subtext="left on read (20+ days)"
-            variant="warning"
-            animationDelay="0.35s"
-          />
-          <StatCard
-            label="Pain Index"
-            value={metrics.painIndex}
-            subtext="rejections per interview (+1)"
-            variant="highlight"
-            animationDelay="0.45s"
-          />
+          <ScrollReveal delay="0s">
+            <StatCard
+              label="Rejection Rate"
+              value={metrics.rejectionRate}
+              subtext="of all applications"
+              variant="highlight"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.08s">
+            <StatCard
+              label="Ghosting Rate"
+              value={metrics.ghostingRate}
+              subtext="left on read (20+ days)"
+              variant="warning"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.16s">
+            <StatCard
+              label="Pain Index"
+              value={metrics.painIndex}
+              subtext="rejections per interview (+1)"
+              variant="highlight"
+            />
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Row 2 — Speed */}
-      <div className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-        <SectionHeader>Rejection Speed</SectionHeader>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div>
+        <ScrollReveal><SectionHeader>Rejection Speed</SectionHeader></ScrollReveal>
+        <ScrollReveal delay="0s" className="mb-3">
           <FastestRejectionBadge
             company={metrics.fastestCompany}
             days={metrics.fastestDays}
-            animationDelay="0.55s"
           />
-          <StatCard
-            label="Avg Time to Rejection"
-            value={`${metrics.avgDays}d`}
-            subtext="days from apply to despair"
-            animationDelay="0.6s"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
-          <StatCard
-            label="Slowest Rejection"
-            value={`${metrics.slowestDays}d`}
-            subtext={metrics.slowestCompany}
-            animationDelay="0.65s"
-          />
+        </ScrollReveal>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <ScrollReveal delay="0.08s">
+            <StatCard
+              label="Avg Time to Rejection"
+              value={formatDuration(metrics.avgDays)}
+              subtext="from apply to despair"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.16s">
+            <StatCard
+              label="Slowest Rejection"
+              value={formatDuration(metrics.slowestDays)}
+              subtext={`${metrics.slowestCompany.charAt(0)}${'█'.repeat(metrics.slowestCompany.length - 1)} · name redacted`}
+            />
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Row 3 — Streaks */}
-      <div className="animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
-        <SectionHeader>Streaks &amp; Records</SectionHeader>
+      <div>
+        <ScrollReveal><SectionHeader>Streaks &amp; Records</SectionHeader></ScrollReveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <StatCard
-            label="Current Streak"
-            value={`${metrics.currentStreak}d`}
-            subtext="consecutive rejection days"
-            variant={metrics.currentStreak >= 3 ? 'highlight' : 'default'}
-            animationDelay="0.75s"
-          />
-          <StatCard
-            label="Longest Streak"
-            value={`${metrics.longestStreak}d`}
-            subtext="personal best (worst)"
-            variant="highlight"
-            animationDelay="0.8s"
-          />
-          <StatCard
-            label="Peak Rejection Week"
-            value={metrics.peakWeekCount}
-            subtext={`rejections in one week (${formatDate(metrics.peakWeekStart)})`}
-            variant="highlight"
-            animationDelay="0.85s"
-          />
-          <StatCard
-            label="Most in One Day"
-            value={metrics.mostInOneDay}
-            subtext={formatDate(metrics.mostInOneDayDate)}
-            animationDelay="0.9s"
-          />
+          <ScrollReveal delay="0s">
+            <StatCard
+              label="Current Streak"
+              value={`${metrics.currentStreak}d`}
+              subtext="consecutive rejection days"
+              variant={metrics.currentStreak >= 3 ? 'highlight' : 'default'}
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.08s">
+            <StatCard
+              label="Longest Streak"
+              value={`${metrics.longestStreak}d`}
+              subtext="personal best (worst)"
+              variant="highlight"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.16s">
+            <StatCard
+              label="Peak Rejection Week"
+              value={metrics.peakWeekCount}
+              subtext={`rejections in one week (${formatDate(metrics.peakWeekStart)})`}
+              variant="highlight"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.24s">
+            <StatCard
+              label="Most in One Day"
+              value={metrics.mostInOneDay}
+              subtext={formatDate(metrics.mostInOneDayDate)}
+            />
+          </ScrollReveal>
         </div>
       </div>
 
       {/* Row 4 — Trend */}
-      <div className="animate-fade-in-up" style={{ animationDelay: '0.95s' }}>
-        <SectionHeader>Trend</SectionHeader>
+      <div>
+        <ScrollReveal><SectionHeader>Trend</SectionHeader></ScrollReveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <StatCard
-            label="Avg Rejections / Week"
-            value={metrics.avgPerWeek}
-            subtext="consistent, if nothing else"
-            animationDelay="1s"
-          />
-          <StatCard
-            label="Currently Interviewing"
-            value={metrics.interviewing}
-            subtext="optimism not yet crushed"
-            animationDelay="1.05s"
-          />
+          <ScrollReveal delay="0s">
+            <StatCard
+              label="Avg Rejections / Week"
+              value={metrics.avgPerWeek}
+              subtext="consistent, if nothing else"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay="0.08s">
+            <StatCard
+              label="Currently Interviewing"
+              value={metrics.interviewing}
+              subtext="optimism not yet crushed"
+            />
+          </ScrollReveal>
         </div>
       </div>
     </div>

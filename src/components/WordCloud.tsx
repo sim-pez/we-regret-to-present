@@ -26,6 +26,7 @@ export default function WordCloud({ words }: WordCloudProps) {
   const [dimensions, setDimensions] = useState({ width: 0, height: 520 });
   const [isReady, setIsReady] = useState(false);
   const [hoveredWord, setHoveredWord] = useState<string | null>(null);
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; word: string; count: number } | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -97,7 +98,7 @@ export default function WordCloud({ words }: WordCloudProps) {
   const isAnyHovered = hoveredWord !== null;
 
   return (
-    <div ref={containerRef} className="w-full">
+    <div ref={containerRef} className="w-full relative">
       {!isReady && (
         <div className="w-full h-[520px] animate-pulse flex items-center justify-center">
           <span className="text-zinc-700 font-mono text-sm">computing rejection vocabulary...</span>
@@ -202,16 +203,50 @@ export default function WordCloud({ words }: WordCloudProps) {
                   }}
                   textAnchor="middle"
                   transform={`translate(${word.x ?? 0},${word.y ?? 0}) rotate(${word.rotate ?? 0})`}
-                  onMouseEnter={() => setHoveredWord(word.text)}
-                  onMouseLeave={() => setHoveredWord(null)}
+                  onMouseEnter={(e) => {
+                    setHoveredWord(word.text);
+                    const rect = containerRef.current?.getBoundingClientRect();
+                    if (rect) {
+                      setTooltip({
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top,
+                        word: word.text,
+                        count: word.originalCount,
+                      });
+                    }
+                  }}
+                  onMouseMove={(e) => {
+                    const rect = containerRef.current?.getBoundingClientRect();
+                    if (rect && tooltip) {
+                      setTooltip((t) => t && { ...t, x: e.clientX - rect.left, y: e.clientY - rect.top });
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredWord(null);
+                    setTooltip(null);
+                  }}
                 >
-                  <title>{`"${word.text}" — ${word.originalCount}×`}</title>
+                  <title>{`"${word.text}" — ${word.originalCount}`}</title>
                   {word.text}
                 </text>
               );
             })}
           </g>
         </svg>
+      )}
+      {tooltip && (
+        <div
+          key={tooltip.word}
+          className="wc-tooltip-pop pointer-events-none absolute z-50 font-mono"
+          style={{ left: tooltip.x + 16, top: tooltip.y - 44 }}
+        >
+          <span
+            className="inline-block bg-zinc-950 border border-orange-500/60 text-orange-300 text-base font-bold px-3 py-1 rounded-sm whitespace-nowrap tracking-widest"
+            style={{ boxShadow: '0 0 12px rgba(249,115,22,0.5), 0 0 32px rgba(249,115,22,0.18)' }}
+          >
+            {tooltip.count}
+          </span>
+        </div>
       )}
     </div>
   );

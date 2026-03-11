@@ -1,11 +1,24 @@
-interface HeroSectionProps {
-  totalApplications: number;
-  totalRejected: number;
-}
+'use client';
 
-export default function HeroSection({ totalApplications, totalRejected }: HeroSectionProps) {
-  const rejectionRate =
-    totalApplications > 0 ? `${Math.round((totalRejected / totalApplications) * 100)}%` : '—';
+import { useEffect, useState } from 'react';
+
+const QUOTE = '"Thank you for your interest. After careful consideration..."';
+
+export default function HeroSection() {
+  const [displayed, setDisplayed] = useState('');
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const delay = setTimeout(() => setStarted(true), 1200);
+    return () => clearTimeout(delay);
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    if (displayed.length >= QUOTE.length) return;
+    const t = setTimeout(() => setDisplayed(QUOTE.slice(0, displayed.length + 1)), 40);
+    return () => clearTimeout(t);
+  }, [started, displayed]);
 
   return (
     <section className="animate-fade-in-up mb-24 relative pt-6" style={{ animationDelay: '0.05s' }}>
@@ -37,21 +50,12 @@ export default function HeroSection({ totalApplications, totalRejected }: HeroSe
           say about the market (or me).
         </p>
 
-        {/* Stats row */}
-        <div className="flex flex-wrap items-end gap-10 md:gap-16">
-          <div>
-            <p className="text-4xl md:text-5xl font-mono font-bold text-red-400 tabular-nums leading-none mb-2">
-              {rejectionRate}
-            </p>
-            <p className="text-xs font-mono uppercase tracking-[0.18em] text-zinc-600">
-              Rejection Rate
-            </p>
-          </div>
-        </div>
-
-        {/* Subtle quote */}
-        <p className="font-mono text-zinc-700 text-sm mt-12 italic">
-          &ldquo;Thank you for your interest. After careful consideration...&rdquo;
+        {/* Typewriter quote */}
+        <p className="font-mono text-zinc-700 text-sm mt-12 italic min-h-[1.25rem]">
+          {displayed}
+          {displayed.length < QUOTE.length && started && (
+            <span className="animate-blink-cursor border-r border-zinc-600 ml-px" />
+          )}
         </p>
       </div>
     </section>

@@ -21,7 +21,7 @@ export default async function Home() {
       </div>
 
       <main className="relative z-10 min-h-screen px-6 py-14 md:px-12 lg:px-20 max-w-7xl mx-auto">
-        <HeroSection totalApplications={metrics.total} totalRejected={metrics.rejected} />
+        <HeroSection />
 
         {/* Word Cloud Section */}
         <section className="animate-fade-in-up mb-16" style={{ animationDelay: '0.15s' }}>

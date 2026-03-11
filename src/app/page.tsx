@@ -15,15 +15,9 @@ export default async function Home() {
 
   return (
     <>
-      {/* Ambient background glows — fixed so they don't scroll */}
-      <div aria-hidden className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-red-900/6 rounded-full blur-[120px]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-red-700/5 rounded-full blur-3xl" />
-      </div>
+      <HeroSection />
 
-      <main className="relative z-10 min-h-screen px-6 py-14 md:px-12 lg:px-20 max-w-7xl mx-auto">
-        <HeroSection />
-
+      <main className="relative z-10 px-6 py-20 md:px-12 lg:px-20 max-w-7xl mx-auto">
         {/* Word Cloud Section */}
         <ScrollReveal className="mb-16">
           <div className="flex items-center gap-4 mb-4">

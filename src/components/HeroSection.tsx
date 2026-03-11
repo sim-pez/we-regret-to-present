@@ -21,8 +21,18 @@ export default function HeroSection() {
   }, [started, displayed]);
 
   return (
-    <section className="animate-fade-in-up mb-24 relative pt-6" style={{ animationDelay: '0.05s' }}>
-      <div className="relative">
+    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-20">
+      {/* Solid background — covers body dot grid for a clean distinct look */}
+      <div className="absolute inset-0 bg-[#080B10]" />
+
+      {/* Ambient glows */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-red-900/8 rounded-full blur-[130px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-red-700/5 rounded-full blur-3xl" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl w-full mx-auto animate-fade-in-up pt-6" style={{ animationDelay: '0.05s' }}>
         {/* Status pill */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/8 bg-white/4 text-xs font-mono text-zinc-400 mb-10 select-none">
           <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse-dot" />
@@ -57,6 +67,24 @@ export default function HeroSection() {
             <span className="animate-blink-cursor border-r border-zinc-600 ml-px" />
           )}
         </p>
+      </div>
+
+      {/* Scroll cue */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 select-none">
+        <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-600">scroll</span>
+        <svg
+          className="animate-scroll-bounce text-zinc-700"
+          width="16"
+          height="24"
+          viewBox="0 0 16 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M8 4 L8 20 M2 14 L8 20 L14 14" />
+        </svg>
       </div>
     </section>
   );

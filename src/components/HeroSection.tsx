@@ -21,7 +21,7 @@ export default function HeroSection() {
   }, [started, displayed]);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-20">
+    <section className="relative min-h-screen flex flex-col justify-start pt-[18vh] px-6 md:px-12 lg:px-20">
       {/* Solid background — covers body dot grid for a clean distinct look */}
       <div className="absolute inset-0 bg-[#080B10]" />
 
@@ -70,7 +70,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll cue */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 select-none">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 select-none animate-fade-in" style={{ animationDelay: '5s' }}>
         <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-600">scroll</span>
         <svg
           className="animate-scroll-bounce text-zinc-700"

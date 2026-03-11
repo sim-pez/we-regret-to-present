@@ -59,7 +59,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
             <StatCard
               label="Pain Index"
               value={metrics.painIndex}
-              subtext="rejections per interview (+1)"
+              subtext="ratio of pain to hope"
               variant="highlight"
             />
           </ScrollReveal>
@@ -117,7 +117,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
             <StatCard
               label="Peak Rejection Week"
               value={metrics.peakWeekCount}
-              subtext={`rejections in one week (${formatDate(metrics.peakWeekStart)})`}
+              subtext="rejections in one week"
               variant="highlight"
             />
           </ScrollReveal>

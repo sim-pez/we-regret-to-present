@@ -112,7 +112,7 @@ export default function WordCloud({ words }: WordCloudProps) {
     <div ref={containerRef} className="w-full relative">
       {!isReady && (
         <div className="w-full h-[520px] flex items-center justify-center">
-          <span className="text-zinc-700 font-mono text-sm">computing rejection vocabulary...</span>
+          <span className="text-zinc-400 font-mono text-sm">computing rejection vocabulary...</span>
         </div>
       )}
       {isReady && cloudWords.length > 0 && (

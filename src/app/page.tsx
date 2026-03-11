@@ -26,7 +26,7 @@ export default async function Home() {
             </h2>
             <div className="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent" />
           </div>
-          <p className="text-zinc-600 text-sm mb-5 font-mono">
+          <p className="text-zinc-400 text-sm mb-5 font-mono">
             Words extracted from rejection emails, sized by frequency.
           </p>
           {/* Gradient-border card */}

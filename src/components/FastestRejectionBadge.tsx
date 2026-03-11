@@ -41,7 +41,7 @@ export default function FastestRejectionBadge({
           <p className="text-2xl md:text-3xl font-bold font-mono text-amber-400 leading-none tracking-widest">
             {company.charAt(0)}<span className="text-zinc-700">{'█'.repeat(Math.min(company.length - 1, 19))}</span>
           </p>
-          <p className="text-xs text-zinc-600 font-mono mt-1">name redacted · {company.length} chars</p>
+          <p className="text-xs text-zinc-500 font-mono mt-1">name redacted · {company.length} chars</p>
 
           {/* Fake paywall popover */}
           <div className="absolute bottom-full left-0 mb-3 w-72 bg-[#0d1117] border border-zinc-800 rounded-xl shadow-2xl opacity-0 group-hover/paywall:opacity-100 transition-opacity duration-200 [transition-delay:200ms] group-hover/paywall:[transition-delay:0ms] z-50 overflow-hidden">
@@ -64,7 +64,7 @@ export default function FastestRejectionBadge({
                   Hire me
                 </a>
               </div>
-              <p className="text-[10px] text-zinc-700 font-mono italic">
+              <p className="text-[10px] text-zinc-500 font-mono italic">
                 * Offer valid until I get a job offer. Void where prohibited by budget freezes.
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function FastestRejectionBadge({
           <span className="font-mono text-red-400 font-bold">{hoursOrDays}</span> — a feat of
           administrative excellence.
         </p>
-        <p className="text-xs text-zinc-700 font-mono italic mt-4">
+        <p className="text-xs text-zinc-500 font-mono italic mt-4">
           &ldquo;We were impressed by your background, but unfortunately...&rdquo;
         </p>
       </div>

@@ -71,7 +71,7 @@ export default function StatCard({
           }
         </p>
         {subtext && (
-          <p className="text-xs text-zinc-600 mt-2.5 leading-relaxed font-mono">{subtext}</p>
+          <p className="text-xs text-zinc-400 mt-2.5 leading-relaxed font-mono">{subtext}</p>
         )}
       </div>
     </div>

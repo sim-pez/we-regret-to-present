@@ -61,7 +61,7 @@ export default function HeroSection() {
         </p>
 
         {/* Typewriter quote */}
-        <p className="font-mono text-zinc-700 text-sm mt-12 italic min-h-[1.25rem]">
+        <p className="font-mono text-zinc-400 text-sm mt-12 italic min-h-[1.25rem]">
           {displayed}
           {displayed.length < QUOTE.length && started && (
             <span className="animate-blink-cursor border-r border-zinc-600 ml-px" />
@@ -71,9 +71,9 @@ export default function HeroSection() {
 
       {/* Scroll cue */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 select-none animate-fade-in" style={{ animationDelay: '5s' }}>
-        <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-600">scroll</span>
+        <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-zinc-500">scroll</span>
         <svg
-          className="animate-scroll-bounce text-zinc-700"
+          className="animate-scroll-bounce text-zinc-500"
           width="16"
           height="24"
           viewBox="0 0 16 24"

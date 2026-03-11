@@ -13,19 +13,12 @@ export default function StatCard({
   variant = 'default',
   animationDelay,
 }: StatCardProps) {
-  const borderClass =
+  const gradientBorder =
     variant === 'highlight'
-      ? 'border-red-500/25 hover:border-red-500/50'
+      ? 'from-red-500/25 via-red-900/10 to-transparent'
       : variant === 'warning'
-        ? 'border-amber-500/25 hover:border-amber-500/50'
-        : 'border-white/8 hover:border-white/16';
-
-  const topAccent =
-    variant === 'highlight'
-      ? 'from-red-500/80 to-red-700/40'
-      : variant === 'warning'
-        ? 'from-amber-500/80 to-amber-700/40'
-        : 'from-zinc-600/60 to-transparent';
+        ? 'from-amber-500/25 via-amber-900/10 to-transparent'
+        : 'from-white/7 via-white/2 to-transparent';
 
   const valueClass =
     variant === 'highlight'
@@ -34,19 +27,41 @@ export default function StatCard({
         ? 'text-amber-400'
         : 'text-zinc-100';
 
+  const glowShadow =
+    variant === 'highlight'
+      ? '0 0 28px -6px rgba(239, 68, 68, 0.18)'
+      : variant === 'warning'
+        ? '0 0 28px -6px rgba(245, 158, 11, 0.18)'
+        : '0 0 28px -6px rgba(255, 255, 255, 0.04)';
+
   return (
     <div
-      className={`animate-fade-in-up relative border ${borderClass} bg-white/[0.03] backdrop-blur-sm p-5 rounded-xl transition-all duration-300 hover:bg-white/[0.06] hover:-translate-y-0.5 hover:shadow-xl group overflow-hidden`}
+      className="animate-fade-in-up relative group overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-0.5 cursor-default"
       style={animationDelay ? { animationDelay } : undefined}
     >
-      {/* Top accent line */}
+      {/* Gradient border layer */}
       <div
-        className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${topAccent} opacity-70 group-hover:opacity-100 transition-opacity duration-300`}
+        className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradientBorder} opacity-70 group-hover:opacity-100 transition-opacity duration-300`}
+      />
+      {/* Dark card background */}
+      <div className="absolute inset-[1px] rounded-[11px] bg-[#0d1117]" />
+
+      {/* Hover glow via box-shadow on a pseudo-layer */}
+      <div
+        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{ boxShadow: glowShadow }}
       />
 
-      <p className="text-xs uppercase tracking-[0.15em] text-zinc-500 mb-2 font-mono">{label}</p>
-      <p className={`text-3xl font-mono font-bold tabular-nums ${valueClass}`}>{value}</p>
-      {subtext && <p className="text-xs text-zinc-600 mt-2 leading-relaxed">{subtext}</p>}
+      {/* Content */}
+      <div className="relative z-10 p-5">
+        <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 mb-3 font-mono">{label}</p>
+        <p className={`text-3xl font-mono font-bold tabular-nums leading-none ${valueClass}`}>
+          {value}
+        </p>
+        {subtext && (
+          <p className="text-xs text-zinc-600 mt-2.5 leading-relaxed font-mono">{subtext}</p>
+        )}
+      </div>
     </div>
   );
 }

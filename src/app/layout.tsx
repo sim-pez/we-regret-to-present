@@ -1,16 +1,23 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google';
 import './globals.css';
 
-const playfairDisplay = Playfair_Display({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-inter',
   display: 'swap',
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
+  display: 'swap',
+});
+
+// Kept for word cloud only
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
   display: 'swap',
 });
 
@@ -26,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfairDisplay.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-zinc-950 text-zinc-100 antialiased">{children}</body>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable}`}>
+      <body className="bg-[#080B10] text-zinc-100 antialiased">{children}</body>
     </html>
   );
 }

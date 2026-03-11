@@ -13,29 +13,44 @@ export default async function Home() {
   const [words, metrics] = await Promise.all([getWordCloudData(), getApplicationMetrics()]);
 
   return (
-    <main className="min-h-screen bg-zinc-950 px-4 py-12 md:px-8 md:py-16 max-w-5xl mx-auto">
-      <HeroSection totalApplications={metrics.total} totalRejected={metrics.rejected} />
+    <>
+      {/* Ambient background glows — fixed so they don't scroll */}
+      <div aria-hidden className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-red-900/6 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-red-700/5 rounded-full blur-3xl" />
+      </div>
 
-      {/* Word Cloud Section */}
-      <section className="animate-fade-in-up mb-14" style={{ animationDelay: '0.15s' }}>
-        <h2 className="text-xs uppercase tracking-[0.2em] text-zinc-500 font-mono mb-3 flex items-center gap-3">
-          <span className="h-px w-3 bg-zinc-700" />
-          The Vocabulary of Rejection
-        </h2>
-        <p className="text-zinc-600 font-serif italic text-sm mb-4">
-          Words extracted from rejection emails, sized by frequency.
-        </p>
-        <div className="border border-white/8 bg-white/[0.02] rounded-xl p-4">
-          <WordCloud words={words} />
-        </div>
-      </section>
+      <main className="relative z-10 min-h-screen px-6 py-14 md:px-12 lg:px-20 max-w-7xl mx-auto">
+        <HeroSection totalApplications={metrics.total} totalRejected={metrics.rejected} />
 
-      {/* Metrics Section */}
-      <section className="mb-14">
-        <MetricsGrid metrics={metrics} />
-      </section>
+        {/* Word Cloud Section */}
+        <section className="animate-fade-in-up mb-16" style={{ animationDelay: '0.15s' }}>
+          <div className="flex items-center gap-4 mb-4">
+            <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500 font-mono">
+              The Vocabulary of Rejection
+            </h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent" />
+          </div>
+          <p className="text-zinc-600 text-sm mb-5 font-mono">
+            Words extracted from rejection emails, sized by frequency.
+          </p>
+          {/* Gradient-border card */}
+          <div className="relative rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/6 via-white/2 to-transparent rounded-2xl" />
+            <div className="absolute inset-[1px] bg-[#0d1117] rounded-2xl" />
+            <div className="relative z-10 p-4">
+              <WordCloud words={words} />
+            </div>
+          </div>
+        </section>
 
-      <DisclaimerSection />
-    </main>
+        {/* Metrics Section */}
+        <section className="mb-16">
+          <MetricsGrid metrics={metrics} />
+        </section>
+
+        <DisclaimerSection />
+      </main>
+    </>
   );
 }

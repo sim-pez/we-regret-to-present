@@ -21,10 +21,12 @@ function formatDate(dateStr: string): string {
 
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-xs uppercase tracking-[0.2em] text-zinc-500 font-mono mb-4 flex items-center gap-3">
-      <span className="h-px w-3 bg-zinc-700" />
-      {children}
-    </h2>
+    <div className="flex items-center gap-4 mb-5">
+      <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500 font-mono whitespace-nowrap">
+        {children}
+      </h2>
+      <div className="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent" />
+    </div>
   );
 }
 
@@ -34,26 +36,20 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
       {/* Row 1 — Headlines */}
       <div className="animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
         <SectionHeader>The Headline Numbers</SectionHeader>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           <StatCard
             label="Rejection Rate"
             value={metrics.rejectionRate}
-            subtext={`${metrics.rejected} of ${metrics.total} applications`}
+            subtext="of all applications"
             variant="highlight"
             animationDelay="0.3s"
           />
           <StatCard
             label="Ghosting Rate"
             value={metrics.ghostingRate}
-            subtext={`${metrics.ghosted} left on read (20+ days)`}
+            subtext="left on read (20+ days)"
             variant="warning"
             animationDelay="0.35s"
-          />
-          <StatCard
-            label="Total Applications"
-            value={metrics.total}
-            subtext="courage, or delusion"
-            animationDelay="0.4s"
           />
           <StatCard
             label="Pain Index"

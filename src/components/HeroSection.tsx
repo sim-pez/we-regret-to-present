@@ -4,50 +4,54 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ totalApplications, totalRejected }: HeroSectionProps) {
+  const rejectionRate =
+    totalApplications > 0 ? `${Math.round((totalRejected / totalApplications) * 100)}%` : '—';
+
   return (
-    <section className="animate-fade-in-up mb-16 relative" style={{ animationDelay: '0.05s' }}>
-      {/* Background glow blob */}
-      <div
-        aria-hidden
-        className="absolute -top-16 -left-16 w-[500px] h-72 bg-red-900/20 rounded-full blur-3xl pointer-events-none"
-      />
+    <section className="animate-fade-in-up mb-24 relative pt-6" style={{ animationDelay: '0.05s' }}>
+      <div className="relative">
+        {/* Status pill */}
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/8 bg-white/4 text-xs font-mono text-zinc-400 mb-10 select-none">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse-dot" />
+          Personal Data Visualization &nbsp;·&nbsp; Job Search Analytics
+        </div>
 
-      <div className="relative py-6">
-        <p className="text-xs uppercase tracking-[0.25em] text-red-500/60 font-mono mb-8 flex items-center gap-3">
-          <span className="inline-block w-6 h-px bg-red-500/50" />
-          A Personal Data Visualization
-        </p>
-
-        <h1 className="text-5xl md:text-7xl font-serif font-bold text-zinc-100 leading-[1.08] tracking-tight mb-6">
+        {/* Main heading */}
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-zinc-50 leading-[1.02] tracking-tight mb-6">
           We Regret to
           <br />
           <span
             className="text-transparent bg-clip-text"
             style={{
-              backgroundImage: 'linear-gradient(135deg, #fca5a5, #ef4444, #dc2626)',
+              backgroundImage:
+                'linear-gradient(135deg, #fca5a5 0%, #f87171 35%, #ef4444 65%, #dc2626 100%)',
             }}
           >
-            Inform You
+            Inform You.
           </span>
         </h1>
 
-        <p className="text-zinc-400 font-serif text-xl md:text-2xl leading-relaxed max-w-2xl mb-8">
-          An honest accounting of{' '}
-          <span className="font-mono text-zinc-100 font-bold not-italic">{totalApplications}</span>{' '}
-          job applications — their outcomes, and what the data says about the market (or me).
+        {/* Subtext */}
+        <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-14">
+          A brutally honest accounting of job applications — their outcomes, and what the numbers
+          say about the market (or me).
         </p>
 
-        <div className="flex items-center gap-5">
-          <div className="h-px flex-1 max-w-xs bg-gradient-to-r from-red-500/40 to-transparent" />
-          <p className="font-mono text-zinc-400 text-sm whitespace-nowrap">
-            <span className="text-red-400 font-bold text-3xl tabular-nums">{totalRejected}</span>
-            <span className="ml-2 text-zinc-500">rejections on record</span>
-          </p>
-          <div className="h-px w-6 bg-zinc-800" />
+        {/* Stats row */}
+        <div className="flex flex-wrap items-end gap-10 md:gap-16">
+          <div>
+            <p className="text-4xl md:text-5xl font-mono font-bold text-red-400 tabular-nums leading-none mb-2">
+              {rejectionRate}
+            </p>
+            <p className="text-xs font-mono uppercase tracking-[0.18em] text-zinc-600">
+              Rejection Rate
+            </p>
+          </div>
         </div>
 
-        <p className="font-serif italic text-zinc-700 text-sm mt-5">
-          &ldquo;Thank you for your interest in this position. After careful consideration...&rdquo;
+        {/* Subtle quote */}
+        <p className="font-mono text-zinc-700 text-sm mt-12 italic">
+          &ldquo;Thank you for your interest. After careful consideration...&rdquo;
         </p>
       </div>
     </section>

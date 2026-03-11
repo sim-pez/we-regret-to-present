@@ -28,9 +28,6 @@ export default function FastestRejectionBadge({
         style={{ boxShadow: '0 0 40px -8px rgba(245, 158, 11, 0.2)' }}
       />
 
-      {/* Inner decorative frame */}
-      <div className="absolute inset-4 border border-amber-500/8 rounded-lg pointer-events-none group-hover:border-amber-500/16 transition-colors duration-300" />
-
       <div className="relative z-10 p-6 md:p-8">
         <p className="text-xs uppercase tracking-[0.2em] text-amber-500/70 font-mono mb-3 flex items-center gap-2">
           <span>🏆</span>

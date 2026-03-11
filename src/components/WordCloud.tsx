@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3Cloud from 'd3-cloud';
 import { scaleLinear } from 'd3-scale';
-import { interpolateInferno } from 'd3-scale-chromatic';
 
 interface Word {
   word: string;
@@ -18,6 +17,25 @@ interface CloudWord extends d3Cloud.Word {
 
 interface WordCloudProps {
   words: Word[];
+}
+
+// Multi-stop muted palette: dark navy → dusty mauve → muted amber → sage → warm stone
+const PALETTE: [number, number, number][] = [
+  [52,  56,  75],   // 0.00 — dark muted navy
+  [101, 80,  101],  // 0.25 — dusty mauve/purple
+  [122, 100, 65],   // 0.50 — muted amber/sand
+  [100, 155, 140],  // 0.75 — muted sage/teal
+  [231, 229, 228],  // 1.00 — warm stone-200
+];
+
+function paletteColor(t: number): string {
+  const n = PALETTE.length - 1;
+  const scaled = t * n;
+  const i = Math.min(Math.floor(scaled), n - 1);
+  const u = scaled - i;
+  const [r1, g1, b1] = PALETTE[i];
+  const [r2, g2, b2] = PALETTE[i + 1];
+  return `rgb(${Math.round(r1 + u * (r2 - r1))},${Math.round(g1 + u * (g2 - g1))},${Math.round(b1 + u * (b2 - b1))})`;
 }
 
 export default function WordCloud({ words }: WordCloudProps) {
@@ -64,7 +82,6 @@ export default function WordCloud({ words }: WordCloudProps) {
       .font('Playfair Display, serif')
       .fontSize((d) => (d as CloudWord).size)
       .on('end', (output) => {
-        // Render low-frequency words first so high-frequency sit on top
         const sorted = [...output].sort(
           (a, b) => (a as CloudWord).originalCount - (b as CloudWord).originalCount
         );
@@ -79,15 +96,9 @@ export default function WordCloud({ words }: WordCloudProps) {
   const minCount = counts.length > 0 ? Math.min(...counts) : 0;
   const maxCount = counts.length > 0 ? Math.max(...counts) : 1;
 
-  // inferno: 0.25 = deep purple-red, 0.92 = hot orange-yellow
   const colorScale = scaleLinear<number>()
     .domain([minCount, maxCount])
-    .range([0.25, 0.92])
-    .clamp(true);
-
-  const glowScale = scaleLinear()
-    .domain([minCount, maxCount])
-    .range([0, 1])
+    .range([0.05, 1])
     .clamp(true);
 
   const weightScale = scaleLinear()
@@ -100,7 +111,7 @@ export default function WordCloud({ words }: WordCloudProps) {
   return (
     <div ref={containerRef} className="w-full relative">
       {!isReady && (
-        <div className="w-full h-[520px] animate-pulse flex items-center justify-center">
+        <div className="w-full h-[520px] flex items-center justify-center">
           <span className="text-zinc-700 font-mono text-sm">computing rejection vocabulary...</span>
         </div>
       )}
@@ -111,94 +122,26 @@ export default function WordCloud({ words }: WordCloudProps) {
           className="overflow-visible"
           aria-label="Word cloud of rejection letter vocabulary"
         >
-          <defs>
-            <filter id="wc-glow-sm" x="-25%" y="-25%" width="150%" height="150%">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <filter id="wc-glow-md" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <filter id="wc-glow-lg" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <filter id="wc-glow-hover" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="10" result="blur" />
-              <feColorMatrix
-                in="blur"
-                type="matrix"
-                values="1 0 0 0 0.9  0 0.3 0 0 0.1  0 0 0 0 0  0 0 0 1.5 0"
-                result="coloredBlur"
-              />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <radialGradient id="wc-bg" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#7f1d1d" stopOpacity="0.18" />
-              <stop offset="55%" stopColor="#7f1d1d" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#7f1d1d" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-
-          {/* Subtle radial background glow */}
-          <ellipse
-            cx={dimensions.width / 2}
-            cy={dimensions.height / 2}
-            rx={dimensions.width * 0.44}
-            ry={dimensions.height * 0.44}
-            fill="url(#wc-bg)"
-          />
-
           <g transform={`translate(${dimensions.width / 2},${dimensions.height / 2})`}>
-            {cloudWords.map((word, i) => {
-              const glow = glowScale(word.originalCount);
+            {cloudWords.map((word) => {
               const isHovered = hoveredWord === word.text;
               const dimmed = isAnyHovered && !isHovered;
-
-              let filter: string | undefined;
-              if (isHovered) {
-                filter = 'url(#wc-glow-hover)';
-              } else if (glow > 0.7) {
-                filter = 'url(#wc-glow-lg)';
-              } else if (glow > 0.4) {
-                filter = 'url(#wc-glow-md)';
-              } else if (glow > 0.15) {
-                filter = 'url(#wc-glow-sm)';
-              }
-
-              const baseColor = interpolateInferno(colorScale(word.originalCount));
-              const fill = isHovered ? '#fff' : baseColor;
+              const fill = isHovered ? '#f5f5f4' : paletteColor(colorScale(word.originalCount));
               const fontWeight = Math.round(weightScale(word.originalCount) / 100) * 100;
               const isSmall = (word.size ?? 0) < 22;
 
               return (
                 <text
                   key={word.text}
-                  className="word-reveal"
                   style={{
                     fontSize: `${word.size}px`,
                     fontFamily: 'Playfair Display, serif',
                     fontWeight,
                     fontStyle: isSmall ? 'italic' : 'normal',
                     fill,
-                    filter,
                     opacity: dimmed ? 0.2 : 1,
                     cursor: 'default',
-                    animationDelay: `${Math.min(i * 16, 900)}ms`,
-                    transition: 'fill 0.25s ease, opacity 0.25s ease',
+                    transition: 'fill 0.2s ease, opacity 0.2s ease',
                     userSelect: 'none',
                   }}
                   textAnchor="middle"
@@ -240,10 +183,7 @@ export default function WordCloud({ words }: WordCloudProps) {
           className="wc-tooltip-pop pointer-events-none absolute z-50 font-mono"
           style={{ left: tooltip.x + 16, top: tooltip.y - 44 }}
         >
-          <span
-            className="inline-block bg-zinc-950 border border-orange-500/60 text-orange-300 text-base font-bold px-3 py-1 rounded-sm whitespace-nowrap tracking-widest"
-            style={{ boxShadow: '0 0 12px rgba(249,115,22,0.5), 0 0 32px rgba(249,115,22,0.18)' }}
-          >
+          <span className="inline-block bg-zinc-950 border border-zinc-700 text-zinc-300 text-base font-bold px-3 py-1 rounded-sm whitespace-nowrap tracking-widest">
             {tooltip.count}
           </span>
         </div>

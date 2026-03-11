@@ -31,6 +31,7 @@ export interface ApplicationMetrics {
   avgPerWeek: string;
   currentStreak: number;
   longestStreak: number;
+  lastRejectedAt: string;
 }
 
 export async function logEnumValues(): Promise<void> {
@@ -138,7 +139,7 @@ export async function getApplicationMetrics(): Promise<ApplicationMetrics> {
   const weeks = parseFloat(spanResult.rows[0]?.weeks ?? '1');
   const avgPerWeek = (rejected / weeks).toFixed(1);
 
-  // Streak data
+  // Streak data + last rejection timestamp
   const streakResult = await pool.query<{ rejected_at: Date | null }>(`
     SELECT rejected_at
     FROM application
@@ -148,6 +149,7 @@ export async function getApplicationMetrics(): Promise<ApplicationMetrics> {
   const { current: currentStreak, longest: longestStreak } = computeRejectionStreaks(
     streakResult.rows
   );
+  const lastRejectedAt = streakResult.rows[0]?.rejected_at?.toISOString() ?? '';
 
   return {
     total,
@@ -169,5 +171,6 @@ export async function getApplicationMetrics(): Promise<ApplicationMetrics> {
     avgPerWeek,
     currentStreak,
     longestStreak,
+    lastRejectedAt,
   };
 }

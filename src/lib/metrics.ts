@@ -77,14 +77,30 @@ export function computeGhostingRate(ghosted: number, total: number): string {
 }
 
 export function formatDuration(days: number): string {
-  const totalMinutes = Math.round(days * 24 * 60);
-  if (totalMinutes < 1) return '< 1m';
-  const d = Math.floor(totalMinutes / (24 * 60));
-  const h = Math.floor((totalMinutes % (24 * 60)) / 60);
-  const m = totalMinutes % 60;
+  const totalSeconds = Math.round(days * 86400);
+  if (totalSeconds < 1) return '< 1s';
+  const d = Math.floor(totalSeconds / 86400);
+  const h = Math.floor((totalSeconds % 86400) / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
   const parts: string[] = [];
   if (d > 0) parts.push(`${d}d`);
   if (h > 0) parts.push(`${h}h`);
-  if (m > 0 || d > 0 || h > 0) parts.push(`${m}m`);
-  return parts.join(' ') || '< 1m';
+  if (m > 0) parts.push(`${m}m`);
+  if (s > 0) parts.push(`${s}s`);
+  return parts.join(' ') || '< 1s';
+}
+
+export function formatDurationFromSeconds(totalSeconds: number): string {
+  if (totalSeconds < 0) totalSeconds = 0;
+  const d = Math.floor(totalSeconds / 86400);
+  const h = Math.floor((totalSeconds % 86400) / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  const parts: string[] = [];
+  if (d > 0) parts.push(`${d}d`);
+  if (h > 0) parts.push(`${h}h`);
+  if (m > 0) parts.push(`${m}m`);
+  parts.push(`${s}s`);
+  return parts.join(' ');
 }

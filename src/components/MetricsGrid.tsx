@@ -1,5 +1,6 @@
 import StatCard from './StatCard';
 import FastestRejectionBadge from './FastestRejectionBadge';
+import TimeSinceRejection from './TimeSinceRejection';
 import ScrollReveal from './ScrollReveal';
 import type { ApplicationMetrics } from '@/lib/queries';
 import { formatDuration } from '@/lib/metrics';
@@ -89,6 +90,9 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={formatDuration(metrics.slowestDays)}
               subtext={`${metrics.slowestCompany.charAt(0)}${'█'.repeat(metrics.slowestCompany.length - 1)} · name redacted`}
             />
+          </ScrollReveal>
+          <ScrollReveal delay="0.24s">
+            <TimeSinceRejection lastRejectedAt={metrics.lastRejectedAt} />
           </ScrollReveal>
         </div>
       </div>

@@ -13,9 +13,14 @@ const config: Config = {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
         },
+        'card-breathe': {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '0.7' },
+        },
       },
       animation: {
         'blink-cursor': 'blink-cursor 0.8s step-end infinite',
+        'card-breathe': 'card-breathe 3s ease-in-out infinite',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],

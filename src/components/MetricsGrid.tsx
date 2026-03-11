@@ -46,6 +46,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={metrics.rejectionRate}
               subtext="of all applications"
               variant="highlight"
+              animated
             />
           </ScrollReveal>
           <ScrollReveal delay="0.08s">
@@ -54,6 +55,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={metrics.ghostingRate}
               subtext="left on read (20+ days)"
               variant="warning"
+              animated
             />
           </ScrollReveal>
           <ScrollReveal delay="0.16s">
@@ -62,6 +64,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={metrics.painIndex}
               subtext="ratio of pain to hope"
               variant="highlight"
+              animated
             />
           </ScrollReveal>
         </div>
@@ -107,6 +110,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={`${metrics.currentStreak}d`}
               subtext="consecutive rejection days"
               variant={metrics.currentStreak >= 3 ? 'highlight' : 'default'}
+              animated
             />
           </ScrollReveal>
           <ScrollReveal delay="0.08s">
@@ -115,6 +119,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={`${metrics.longestStreak}d`}
               subtext="personal best (worst)"
               variant="highlight"
+              animated
             />
           </ScrollReveal>
           <ScrollReveal delay="0.16s">
@@ -123,6 +128,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               value={metrics.peakWeekCount}
               subtext="rejections in one week"
               variant="highlight"
+              animated
             />
           </ScrollReveal>
           <ScrollReveal delay="0.24s">
@@ -130,6 +136,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               label="Most in One Day"
               value={metrics.mostInOneDay}
               subtext={formatDate(metrics.mostInOneDayDate)}
+              animated
             />
           </ScrollReveal>
         </div>
@@ -144,6 +151,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               label="Avg Rejections / Week"
               value={metrics.avgPerWeek}
               subtext="consistent, if nothing else"
+              animated
             />
           </ScrollReveal>
           <ScrollReveal delay="0.08s">
@@ -151,6 +159,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               label="Currently Interviewing"
               value={metrics.interviewing}
               subtext="optimism not yet crushed"
+              animated
             />
           </ScrollReveal>
         </div>

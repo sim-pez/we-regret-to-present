@@ -22,9 +22,9 @@ export default function FastestRejectionBadge({
       <div className="absolute inset-0 bg-gradient-to-br from-amber-500/30 via-amber-700/10 to-transparent group-hover:from-amber-400/50 group-hover:via-amber-600/15 transition-all duration-500 rounded-xl" />
       <div className="absolute inset-[1px] bg-[#0d1117] rounded-[11px]" />
 
-      {/* Hover glow */}
+      {/* Glow — breathes at rest, full intensity on hover */}
       <div
-        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute inset-0 rounded-xl animate-card-breathe group-hover:opacity-100 transition-opacity duration-300"
         style={{ boxShadow: '0 0 40px -8px rgba(245, 158, 11, 0.2)' }}
       />
 

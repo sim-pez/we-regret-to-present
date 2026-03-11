@@ -36,7 +36,7 @@ export default function HeroSection() {
         {/* Status pill */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/8 bg-white/4 text-xs font-mono text-zinc-400 mb-10 select-none">
           <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse-dot" />
-          Personal Data Visualization &nbsp;·&nbsp; Job Search Analytics
+          Live &nbsp;·&nbsp; Inbox → AI-analysis → DB
         </div>
 
         {/* Main heading */}

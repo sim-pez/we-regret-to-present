@@ -36,7 +36,7 @@ export default function HeroSection() {
         {/* Status pill */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/8 bg-white/4 text-xs font-mono text-zinc-400 mb-10 select-none">
           <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse-dot" />
-          Live &nbsp;·&nbsp; Inbox → AI-analysis → DB
+          Live
         </div>
 
         {/* Main heading */}
@@ -56,8 +56,7 @@ export default function HeroSection() {
 
         {/* Subtext */}
         <p className="text-zinc-400 text-base md:text-xl leading-relaxed max-w-2xl mb-8 md:mb-14">
-          A brutally honest accounting of job applications — their outcomes, and what the numbers
-          say about the market (or me).
+          Real-time, AI-analyzed insights of my job rejections from my inbox
         </p>
 
         {/* Typewriter quote */}

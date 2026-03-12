@@ -13,7 +13,7 @@ export default async function Home() {
   // Log enum values on load (dev diagnostic)
   logEnumValues().catch(console.error);
 
-  const [words, metrics, mailHistory] = await Promise.all([getWordCloudData(), getApplicationMetrics(), getMailHistory()]);
+  const [words, metrics, mailHistory] = await Promise.all([getWordCloudData(), getApplicationMetrics(), getMailHistory(10)]);
 
   return (
     <>

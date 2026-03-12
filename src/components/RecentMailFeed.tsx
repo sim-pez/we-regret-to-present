@@ -43,25 +43,23 @@ export default function RecentMailFeed({ emails }: RecentMailFeedProps) {
       </div>
 
       {/* Rows */}
-      <div className="divide-y divide-zinc-800/50">
-        {emails.length === 0 ? (
-          <div className="py-4 text-zinc-600 text-center">no mail yet.</div>
-        ) : (
-          emails.map((email) => {
+      {emails.length === 0 ? (
+        <div className="py-4 text-zinc-600 text-center">no mail yet.</div>
+      ) : (
+        <div className="grid grid-cols-[auto_auto_1fr] tabular-nums text-zinc-600">
+          {emails.map((email) => {
             const badge = BADGE[email.classification];
             const { day, time } = formatDate(email.receivedAt);
             return (
-              <div
-                key={email.id}
-                className="grid grid-cols-[1fr_auto] py-2 items-center text-zinc-600 tabular-nums"
-              >
-                <span><span className="inline-block w-[9ch]">{day}</span>{time}</span>
-                <span className={`${badge.color} font-semibold tracking-wide text-right`}>{badge.label}</span>
+              <div key={email.id} className="contents">
+                <span className="py-2 pr-6 border-b border-zinc-800/50">{day}</span>
+                <span className="py-2 pr-4 border-b border-zinc-800/50">{time}</span>
+                <span className={`${badge.color} font-semibold tracking-wide py-2 text-right border-b border-zinc-800/50`}>{badge.label}</span>
               </div>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
 
       {/* Footer */}
       <div className="mt-3 pt-2 border-t border-zinc-800 text-zinc-600 tracking-wide">

@@ -35,7 +35,7 @@ function SectionHeader({ children, right }: { children: React.ReactNode; right?:
   );
 }
 
-export default function MetricsGrid({ metrics, fetchedAt }: MetricsGridProps) {
+export default function MetricsGrid({ metrics }: MetricsGridProps) {
   return (
     <div className="space-y-10">
       {/* Row 1 — Headlines */}

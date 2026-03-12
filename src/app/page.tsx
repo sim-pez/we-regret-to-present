@@ -1,4 +1,4 @@
-import { getWordCloudData, getApplicationMetrics, logEnumValues } from '@/lib/queries';
+import { getWordCloudData, getApplicationMetrics, getMailHistory, logEnumValues } from '@/lib/queries';
 import HeroSection from '@/components/HeroSection';
 import MetricsGrid from '@/components/MetricsGrid';
 import WordCloud from '@/components/WordCloud';
@@ -13,7 +13,7 @@ export default async function Home() {
   // Log enum values on load (dev diagnostic)
   logEnumValues().catch(console.error);
 
-  const [words, metrics] = await Promise.all([getWordCloudData(), getApplicationMetrics()]);
+  const [words, metrics, mailHistory] = await Promise.all([getWordCloudData(), getApplicationMetrics(), getMailHistory()]);
 
   return (
     <>
@@ -59,7 +59,7 @@ export default async function Home() {
             <div className="absolute inset-0 bg-gradient-to-br from-white/6 via-white/2 to-transparent rounded-2xl" />
             <div className="absolute inset-[1px] bg-[#0d1117] rounded-2xl" />
             <div className="relative z-10 p-4">
-              <RecentMailFeed />
+              <RecentMailFeed emails={mailHistory} />
             </div>
           </div>
         </ScrollReveal>

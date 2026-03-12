@@ -1,25 +1,8 @@
-export interface MailEntry {
-  id: string;
-  receivedAt: string; // ISO
-  classification: 'rejection' | 'not_job_related';
-}
+import { MailHistoryEntry } from '@/lib/queries';
 
-const MOCK_EMAILS: MailEntry[] = [
-  { id: '1',  receivedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),         classification: 'rejection' },
-  { id: '2',  receivedAt: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),         classification: 'not_job_related' },
-  { id: '3',  receivedAt: new Date(Date.now() - 7 * 3600 * 1000).toISOString(),         classification: 'not_job_related' },
-  { id: '4',  receivedAt: new Date(Date.now() - 18 * 3600 * 1000).toISOString(),        classification: 'rejection' },
-  { id: '5',  receivedAt: new Date(Date.now() - 26 * 3600 * 1000).toISOString(),        classification: 'rejection' },
-  { id: '6',  receivedAt: new Date(Date.now() - 2 * 86400 * 1000).toISOString(),        classification: 'not_job_related' },
-  { id: '7',  receivedAt: new Date(Date.now() - 3 * 86400 * 1000).toISOString(),        classification: 'rejection' },
-  { id: '8',  receivedAt: new Date(Date.now() - 4 * 86400 * 1000).toISOString(),        classification: 'not_job_related' },
-  { id: '9',  receivedAt: new Date(Date.now() - 5 * 86400 * 1000).toISOString(),        classification: 'rejection' },
-  { id: '10', receivedAt: new Date(Date.now() - 6.5 * 86400 * 1000).toISOString(),      classification: 'rejection' },
-];
-
-const BADGE: Record<MailEntry['classification'], { label: string; color: string }> = {
-  rejection:       { label: 'REJECTION', color: 'text-red-400' },
-  not_job_related: { label: 'OTHER',    color: 'text-zinc-600' },
+const BADGE: Record<MailHistoryEntry['classification'], { label: string; color: string }> = {
+  rejection: { label: 'REJECTION', color: 'text-red-400' },
+  other:     { label: 'OTHER',     color: 'text-zinc-600' },
 };
 
 function formatDate(iso: string): { day: string; time: string } {
@@ -47,34 +30,37 @@ function formatDate(iso: string): { day: string; time: string } {
 }
 
 interface RecentMailFeedProps {
-  emails?: MailEntry[];
+  emails: MailHistoryEntry[];
 }
 
-export default function RecentMailFeed({ emails = MOCK_EMAILS }: RecentMailFeedProps) {
+export default function RecentMailFeed({ emails }: RecentMailFeedProps) {
   return (
     <div className="font-mono text-xs px-4">
       {/* Column headers */}
-      <div className="grid grid-cols-[auto_auto_1fr] gap-x-4 pb-1.5 mb-1 border-b border-zinc-800 text-zinc-600 uppercase tracking-widest">
-        <span className="col-span-2">received</span>
+      <div className="grid grid-cols-[1fr_auto] pb-1.5 mb-1 border-b border-zinc-800 text-zinc-600 uppercase tracking-widest">
+        <span>received</span>
         <span className="text-right">ai classification</span>
       </div>
 
       {/* Rows */}
       <div className="divide-y divide-zinc-800/50">
-        {emails.map((email) => {
-          const badge = BADGE[email.classification];
-          const { day, time } = formatDate(email.receivedAt);
-          return (
-            <div
-              key={email.id}
-              className="grid grid-cols-[auto_auto_1fr] gap-x-4 py-2 items-center text-zinc-600 tabular-nums"
-            >
-              <span>{day}</span>
-              <span>{time}</span>
-              <span className={`${badge.color} font-semibold tracking-wide text-right`}>{badge.label}</span>
-            </div>
-          );
-        })}
+        {emails.length === 0 ? (
+          <div className="py-4 text-zinc-600 text-center">no mail yet.</div>
+        ) : (
+          emails.map((email) => {
+            const badge = BADGE[email.classification];
+            const { day, time } = formatDate(email.receivedAt);
+            return (
+              <div
+                key={email.id}
+                className="grid grid-cols-[1fr_auto] py-2 items-center text-zinc-600 tabular-nums"
+              >
+                <span><span className="inline-block w-[9ch]">{day}</span>{time}</span>
+                <span className={`${badge.color} font-semibold tracking-wide text-right`}>{badge.label}</span>
+              </div>
+            );
+          })
+        )}
       </div>
 
       {/* Footer */}

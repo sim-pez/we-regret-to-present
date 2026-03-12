@@ -58,6 +58,24 @@ export async function getWordCloudData(): Promise<WordCloudWord[]> {
   return result.rows;
 }
 
+export interface MailHistoryEntry {
+  id: number;
+  classification: 'rejection' | 'other';
+  receivedAt: string; // ISO
+}
+
+export async function getMailHistory(limit = 20): Promise<MailHistoryEntry[]> {
+  const result = await pool.query<{ id: number; classification: string; received_at: Date }>(
+    `SELECT id, CAST(classification AS text) AS classification, received_at FROM history ORDER BY received_at DESC LIMIT $1`,
+    [limit]
+  );
+  return result.rows.map((r) => ({
+    id: r.id,
+    classification: r.classification as 'rejection' | 'other',
+    receivedAt: r.received_at.toISOString(),
+  }));
+}
+
 export async function getApplicationMetrics(): Promise<ApplicationMetrics> {
   // Core counts
   const countsResult = await pool.query<{

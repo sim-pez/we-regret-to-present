@@ -41,7 +41,7 @@ function paletteColor(t: number): string {
 export default function WordCloud({ words }: WordCloudProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [cloudWords, setCloudWords] = useState<CloudWord[]>([]);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 520 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 520, maxFont: 88 });
   const [isReady, setIsReady] = useState(false);
   const [hoveredWord, setHoveredWord] = useState<string | null>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; word: string; count: number } | null>(null);
@@ -50,7 +50,9 @@ export default function WordCloud({ words }: WordCloudProps) {
     if (!containerRef.current) return;
     const updateWidth = () => {
       if (containerRef.current) {
-        setDimensions({ width: containerRef.current.offsetWidth, height: 520 });
+        const w = containerRef.current.offsetWidth;
+        const isMobile = w < 640;
+        setDimensions({ width: w, height: isMobile ? 340 : 520, maxFont: isMobile ? 56 : 88 });
       }
     };
     updateWidth();
@@ -66,7 +68,7 @@ export default function WordCloud({ words }: WordCloudProps) {
     const minCount = Math.min(...counts);
     const maxCount = Math.max(...counts);
 
-    const fontSizeScale = scaleLinear().domain([minCount, maxCount]).range([12, 88]).clamp(true);
+    const fontSizeScale = scaleLinear().domain([minCount, maxCount]).range([12, dimensions.maxFont]).clamp(true);
 
     const layout = d3Cloud.default()
       .size([dimensions.width, dimensions.height])
@@ -90,7 +92,7 @@ export default function WordCloud({ words }: WordCloudProps) {
       });
 
     layout.start();
-  }, [dimensions.width, dimensions.height, words]);
+  }, [dimensions.width, dimensions.height, dimensions.maxFont, words]);
 
   const counts = words.map((w) => w.count);
   const minCount = counts.length > 0 ? Math.min(...counts) : 0;
@@ -111,7 +113,7 @@ export default function WordCloud({ words }: WordCloudProps) {
   return (
     <div ref={containerRef} className="w-full relative">
       {!isReady && (
-        <div className="w-full h-[520px] flex items-center justify-center">
+        <div className="w-full h-[340px] md:h-[520px] flex items-center justify-center">
           <span className="text-zinc-400 font-mono text-sm">computing rejection vocabulary...</span>
         </div>
       )}

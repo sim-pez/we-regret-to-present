@@ -17,7 +17,7 @@ export default async function Home() {
     <>
       <HeroSection />
 
-      <main className="relative z-10 px-6 py-20 md:px-12 lg:px-20 max-w-7xl mx-auto">
+      <main className="relative z-10 px-6 py-12 md:py-20 md:px-12 lg:px-20 max-w-7xl mx-auto">
         {/* Word Cloud Section */}
         <ScrollReveal className="mb-16">
           <div className="flex items-center gap-4 mb-4">

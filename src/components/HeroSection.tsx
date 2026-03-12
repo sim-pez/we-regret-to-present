@@ -21,7 +21,7 @@ export default function HeroSection() {
   }, [started, displayed]);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-start pt-[18vh] px-6 md:px-12 lg:px-20">
+    <section className="relative min-h-screen flex flex-col justify-start pt-[10vh] md:pt-[18vh] px-6 md:px-12 lg:px-20">
       {/* Solid background — covers body dot grid for a clean distinct look */}
       <div className="absolute inset-0 bg-[#080B10]" />
 
@@ -40,7 +40,7 @@ export default function HeroSection() {
         </div>
 
         {/* Main heading */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-zinc-50 leading-[1.02] tracking-tight mb-6">
+        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold text-zinc-50 leading-[1.02] tracking-tight mb-6">
           We Regret to
           <br />
           <span
@@ -55,7 +55,7 @@ export default function HeroSection() {
         </h1>
 
         {/* Subtext */}
-        <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-14">
+        <p className="text-zinc-400 text-base md:text-xl leading-relaxed max-w-2xl mb-8 md:mb-14">
           A brutally honest accounting of job applications — their outcomes, and what the numbers
           say about the market (or me).
         </p>

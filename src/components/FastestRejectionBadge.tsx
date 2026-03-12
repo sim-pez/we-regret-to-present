@@ -44,7 +44,7 @@ export default function FastestRejectionBadge({
           <p className="text-xs text-zinc-500 font-mono mt-1">name redacted · {company.length} chars</p>
 
           {/* Fake paywall popover */}
-          <div className="absolute bottom-full left-0 mb-3 w-72 bg-[#0d1117] border border-zinc-800 rounded-xl shadow-2xl opacity-0 group-hover/paywall:opacity-100 transition-opacity duration-200 [transition-delay:200ms] group-hover/paywall:[transition-delay:0ms] z-50 overflow-hidden">
+          <div className="absolute bottom-full left-0 mb-3 w-72 max-w-[calc(100vw-3rem)] bg-[#0d1117] border border-zinc-800 rounded-xl shadow-2xl opacity-0 group-hover/paywall:opacity-100 transition-opacity duration-200 [transition-delay:200ms] group-hover/paywall:[transition-delay:0ms] z-50 overflow-hidden">
             {/* Invisible bridge closing the gap so mouse can reach the popover */}
             <div className="absolute -bottom-3 left-0 w-full h-3" />
             <div className="bg-gradient-to-r from-amber-500/10 to-transparent px-4 pt-4 pb-3 border-b border-zinc-800/60">

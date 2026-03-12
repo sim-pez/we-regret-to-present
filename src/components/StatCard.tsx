@@ -64,7 +64,7 @@ export default function StatCard({
       {/* Content */}
       <div className="relative z-10 p-5">
         <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 mb-3 font-mono">{label}</p>
-        <p className={`text-3xl font-mono font-bold tabular-nums leading-none relative overflow-hidden`}>
+        <p className={`text-2xl md:text-3xl font-mono font-bold tabular-nums leading-none relative overflow-hidden`}>
           {animated
             ? <AnimatedValue value={value} valueClass={valueClass} />
             : <span className={valueClass}>{value}</span>

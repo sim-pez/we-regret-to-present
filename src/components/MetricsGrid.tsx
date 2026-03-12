@@ -7,6 +7,7 @@ import { formatDuration } from '@/lib/metrics';
 
 interface MetricsGridProps {
   metrics: ApplicationMetrics;
+  fetchedAt: string;
 }
 
 function formatDate(dateStr: string): string {
@@ -22,18 +23,19 @@ function formatDate(dateStr: string): string {
   }
 }
 
-function SectionHeader({ children }: { children: React.ReactNode }) {
+function SectionHeader({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
   return (
     <div className="flex items-center gap-4 mb-5">
       <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500 font-mono whitespace-nowrap">
         {children}
       </h2>
       <div className="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent" />
+      {right}
     </div>
   );
 }
 
-export default function MetricsGrid({ metrics }: MetricsGridProps) {
+export default function MetricsGrid({ metrics, fetchedAt }: MetricsGridProps) {
   return (
     <div className="space-y-10">
       {/* Row 1 — Headlines */}

@@ -4,6 +4,8 @@ import MetricsGrid from '@/components/MetricsGrid';
 import WordCloud from '@/components/WordCloud';
 import DisclaimerSection from '@/components/DisclaimerSection';
 import ScrollReveal from '@/components/ScrollReveal';
+import RecentMailFeed from '@/components/RecentMailFeed';
+import LiveIndicator from '@/components/LiveIndicator';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,8 +43,26 @@ export default async function Home() {
 
         {/* Metrics Section */}
         <div className="mb-16">
-          <MetricsGrid metrics={metrics} />
+          <MetricsGrid metrics={metrics} fetchedAt={new Date().toISOString()} />
         </div>
+
+        {/* Recent Mail Feed */}
+        <ScrollReveal delay="0.2s" className="mb-16">
+          <div className="flex items-center gap-4 mb-4">
+            <h2 className="text-xs uppercase tracking-[0.18em] text-zinc-500 font-mono">
+              The Inbox
+            </h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent" />
+            <LiveIndicator fetchedAt={new Date().toISOString()} />
+          </div>
+          <div className="relative rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/6 via-white/2 to-transparent rounded-2xl" />
+            <div className="absolute inset-[1px] bg-[#0d1117] rounded-2xl" />
+            <div className="relative z-10 p-4">
+              <RecentMailFeed />
+            </div>
+          </div>
+        </ScrollReveal>
 
         <DisclaimerSection />
       </main>

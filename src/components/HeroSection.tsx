@@ -40,7 +40,7 @@ export default function HeroSection() {
         </div>
 
         {/* Main heading */}
-        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold text-zinc-50 leading-[1.02] tracking-tight mb-6">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold text-zinc-50 leading-[1.02] tracking-tight mb-6">
           We Regret to
           <br />
           <span

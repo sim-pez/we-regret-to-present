@@ -58,7 +58,7 @@ export default function FastestRejectionBadge({
               </p>
               <div className="flex gap-2 mb-3">
                 <a
-                  href="mailto:smnpzl@gmail.com"
+                  href="mailto:rejectlytics@gmail.com"
                   className="flex-1 text-center text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-md px-3 py-1.5 font-semibold hover:bg-amber-500/30 transition-colors duration-150"
                 >
                   Hire me

@@ -7,7 +7,14 @@ export default function DisclaimerSection() {
         <p className="text-xs text-zinc-400 leading-relaxed">
           Personal data visualization and humor exercise. No ill will toward any company listed.
           <br />
-          If you&apos;re a recruiter who stumbled here: hi, I&apos;m available. Also: please don&apos;t contribute to the dataset.
+          If you&apos;re a recruiter who stumbled here: hi, I&apos;m available here: {' '}
+          <a
+            href="mailto:rejectlytics@gmail.com"
+            className="text-zinc-500 hover:text-zinc-300 transition-colors duration-200 underline underline-offset-2 decoration-zinc-700 hover:decoration-zinc-500"
+          >
+            rejectlytics@gmail.com
+          </a>
+          {' '} (please don&apos;t contribute to the dataset)
         </p>
         <p className="text-xs text-zinc-400 font-mono mt-2">
           Source code:{' '}

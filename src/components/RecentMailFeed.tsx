@@ -1,3 +1,5 @@
+'use client';
+
 import { MailHistoryEntry } from '@/lib/queries';
 
 const BADGE: Record<MailHistoryEntry['classification'], { label: string; color: string }> = {

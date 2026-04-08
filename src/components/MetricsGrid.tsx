@@ -86,14 +86,12 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
             <StatCard
               label="Avg Time to Rejection"
               value={formatDuration(metrics.avgDays)}
-              subtext="from apply to despair"
             />
           </ScrollReveal>
           <ScrollReveal delay="0.16s">
             <StatCard
               label="Slowest Rejection"
               value={formatDuration(metrics.slowestDays)}
-              subtext={`${metrics.slowestCompany.charAt(0)}${'█'.repeat(metrics.slowestCompany.length - 1)} · name redacted`}
             />
           </ScrollReveal>
           <ScrollReveal delay="0.24s">
@@ -148,7 +146,7 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
       <div>
         <ScrollReveal><SectionHeader>Trend</SectionHeader></ScrollReveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <ScrollReveal delay="0s">
+          <ScrollReveal delay="0s" className="h-full">
             <StatCard
               label="Avg Rejections / Week"
               value={metrics.avgPerWeek}
@@ -156,12 +154,11 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
               animated
             />
           </ScrollReveal>
-          <ScrollReveal delay="0.08s">
+          <ScrollReveal delay="0.08s" className="h-full">
             <StatCard
               label="Currently Interviewing"
               value={metrics.interviewing}
-              subtext="optimism not yet crushed"
-              animated
+              censored
             />
           </ScrollReveal>
         </div>

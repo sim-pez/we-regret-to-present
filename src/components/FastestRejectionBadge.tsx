@@ -65,7 +65,7 @@ export default function FastestRejectionBadge({
                 </a>
               </div>
               <p className="text-[10px] text-zinc-500 font-mono italic">
-                * Offer valid until I get a job offer. Void where prohibited by budget freezes.
+                * Offer valid until I get a job offer.
               </p>
             </div>
           </div>

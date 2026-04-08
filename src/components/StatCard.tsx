@@ -7,6 +7,7 @@ interface StatCardProps {
   variant?: 'default' | 'highlight' | 'warning';
   animationDelay?: string;
   animated?: boolean;
+  censored?: boolean;
 }
 
 export default function StatCard({
@@ -16,6 +17,7 @@ export default function StatCard({
   variant = 'default',
   animationDelay,
   animated = false,
+  censored = false,
 }: StatCardProps) {
   const gradientBorder =
     variant === 'highlight'
@@ -45,7 +47,7 @@ export default function StatCard({
 
   return (
     <div
-      className="animate-fade-in-up relative group overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-0.5 cursor-default"
+      className="animate-fade-in-up relative group overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-0.5 cursor-default h-full"
       style={animationDelay ? { animationDelay } : undefined}
     >
       {/* Gradient border layer */}
@@ -64,14 +66,35 @@ export default function StatCard({
       {/* Content */}
       <div className="relative z-10 p-5">
         <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 mb-3 font-mono">{label}</p>
-        <p className={`text-2xl md:text-3xl font-mono font-bold tabular-nums leading-none relative overflow-hidden`}>
-          {animated
-            ? <AnimatedValue value={value} valueClass={valueClass} />
-            : <span className={valueClass}>{value}</span>
-          }
-        </p>
-        {subtext && (
-          <p className="text-xs text-zinc-400 mt-2.5 leading-relaxed font-mono">{subtext}</p>
+
+        {censored ? (
+          <div>
+            {/* Redaction bar — matches height of text-3xl leading-none (~36px) */}
+            <div
+              className="rounded-[3px] h-9 w-24"
+              style={{
+                background: '#1c1c1f',
+                backgroundImage:
+                  'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.04) 3px, rgba(255,255,255,0.04) 4px)',
+                boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.12)',
+              }}
+            />
+            <p className="text-xs text-zinc-600 mt-2.5 leading-relaxed font-mono italic">
+              censored for privacy &mdash; please ask me if interested
+            </p>
+          </div>
+        ) : (
+          <>
+            <p className={`text-2xl md:text-3xl font-mono font-bold tabular-nums leading-none relative overflow-hidden`}>
+              {animated
+                ? <AnimatedValue value={value} valueClass={valueClass} />
+                : <span className={valueClass}>{value}</span>
+              }
+            </p>
+            {subtext && (
+              <p className="text-xs text-zinc-400 mt-2.5 leading-relaxed font-mono">{subtext}</p>
+            )}
+          </>
         )}
       </div>
     </div>
